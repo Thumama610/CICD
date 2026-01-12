@@ -1,0 +1,20 @@
+name: nodejs app
+
+on:
+  push:
+    branches:
+      - main
+      - prod
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check out
+        uses: actions/checkout@v4
+
+      - name: extract version
+        run: |
+          jq -r .version package.json >> "$GITHUB_ENV"
+          echo "==========test the gh env var==========="
+          echo "$GITHUB_ENV"
