@@ -16,6 +16,7 @@ jobs:
       - name: extract version
         run: |
           ls -la
+          cat package.json
           echo "VERSION=$(jq -r .version package.json)" >> "$GITHUB_ENV"
           echo "==========test the gh env var==========="
           echo "version is : ${{env.VERSION}}"
