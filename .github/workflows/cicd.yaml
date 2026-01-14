@@ -58,13 +58,13 @@ jobs:
 
       - name: Build and push
         run: |
-          docker build -t thumama/cicd .
+          docker build -t thumama/cicd:${{ needs.prepare.outputs.image_version }} .
 
-          docker tag thumama/cicd:latest \
-          ${{ secrets.AWS_ID }}.dkr.ecr.${{ secrets.REGION }}.amazonaws.com/thumama/cicd:latest
+          docker tag thumama/cicd:${{ needs.prepare.outputs.image_version }} \
+          ${{ secrets.AWS_ID }}.dkr.ecr.${{ secrets.REGION }}.amazonaws.com/thumama/cicd:${{ needs.prepare.outputs.image_version }}
 
           docker push \
-          ${{ secrets.AWS_ID }}.dkr.ecr.${{ secrets.REGION }}.amazonaws.com/thumama/cicd:latest
+          ${{ secrets.AWS_ID }}.dkr.ecr.${{ secrets.REGION }}.amazonaws.com/thumama/cicd:${{ needs.prepare.outputs.image_version }}
 
           echo "=====================success========================="
 
