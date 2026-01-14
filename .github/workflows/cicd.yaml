@@ -79,6 +79,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
+            echo "================ssh works===================="
             aws ecr get-login-password --region ${{ secrets.REGION }} \
             | docker login --username AWS --password-stdin \
             ${{ secrets.AWS_ID }}.dkr.ecr.${{ secrets.REGION }}.amazonaws.com
@@ -86,8 +87,6 @@ jobs:
             docker pull ${{ secrets.AWS_ID }}.dkr.ecr.${{ secrets.REGION }}\
             .amazonaws.com/thumama/cicd:${{ needs.prepare.outputs.image_version }}
 
-            docker run --name test -dp 3001:3001 \
-            ${{ secrets.AWS_ID }}.dkr.ecr.${{ secrets.REGION }}\
-            .amazonaws.com/thumama/cicd:${{ needs.prepare.outputs.image_version }}
+            docker run --name test -dp 3001:3001 ${{ secrets.AWS_ID }}.dkr.ecr.${{ secrets.REGION }}.amazonaws.com/thumama/${{ needs.prepare.outputs.image_version }}
 
           
